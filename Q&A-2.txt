@@ -12,10 +12,20 @@ JOIN
 4. Selezionare tutti gli studenti con relativo corso di laurea e relativo dipartimento, in ordine alfabetico per cognome e nome
 5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
 6. Selezionare tutti i docenti che insegnano nel Dipartimento di Matematica (54)
-7. BONUS: Selezionare per ogni studente quanti tentativi d'esame ha sostenuto per
-superare ciascuno dei suoi esami
+7. BONUS: Selezionare per ogni studente quanti tentativi d'esame ha sostenuto per superare ciascuno dei suoi esami
 
 Risposte:
 GROUP BY
-1. SELECT COUNT(id), enrolment_date FROM `students` GROUP BY enrolment_date
-2. SELECT COUNT(id), office_number FROM `teachers` GROUP BY office_number
+1. SELECT COUNT(id) FROM `students` GROUP BY year(enrolment_date)
+2. SELECT COUNT(id), office_address FROM `teachers` GROUP BY office_address
+3. 
+4.
+
+JOIN
+1. SELECT * FROM degrees JOIN students ON degrees.id = students.degree_id WHERE degrees.name = 'Corso di Laurea in Economia' 
+2. SELECT * FROM departments JOIN degrees ON departments.id = degrees.department_id WHERE departments.name = 'Dipartimento di Neuroscienze'
+3.
+4. SELECT * FROM students JOIN degrees ON degrees.id = students.degree_id JOIN departments ON departments.id = degrees.department_id ORDER BY students.surname, students.name
+5.
+6. SELECT * FROM departments JOIN teachers ON departments.id = teachers.departments_id WHERE departments.name = 'Dipartimento di Matematica'
+7.
