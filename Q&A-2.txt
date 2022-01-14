@@ -16,16 +16,16 @@ JOIN
 
 Risposte:
 GROUP BY
-1. SELECT COUNT(id) FROM `students` GROUP BY year(enrolment_date)
-2. SELECT COUNT(id), office_address FROM `teachers` GROUP BY office_address
-3. 
-4.
+1. SELECT year(enrolment_date), COUNT(*) FROM `students` GROUP BY year(enrolment_date);
+2. SELECT office_address, COUNT(*) FROM teachers GROUP BY office_address;
+3. SELECT exam_id, AVG(vote) AS 'media' FROM exam_student GROUP BY exam_id;
+4. SELECT department_id, COUNT(*) FROM degrees GROUP BY department_id;
 
 JOIN
-1. SELECT * FROM degrees JOIN students ON degrees.id = students.degree_id WHERE degrees.name = 'Corso di Laurea in Economia' 
-2. SELECT * FROM departments JOIN degrees ON departments.id = degrees.department_id WHERE departments.name = 'Dipartimento di Neuroscienze'
-3.
+1. SELECT students. * FROM degrees JOIN students ON degrees.id = students.degree_id WHERE degrees.name = 'Corso di Laurea in Economia';
+2. SELECT degrees. * FROM departments JOIN degrees ON departments.id = degrees.department_id WHERE departments.name = 'Dipartimento di Neuroscienze';
+3. SELECT courses. * FROM teachers JOIN course_teacher ON teachers.id = course_teacher.teacher_id JOIN courses ON courses.id = course_teacher.course_id WHERE teachers.id = 44;
 4. SELECT * FROM students JOIN degrees ON degrees.id = students.degree_id JOIN departments ON departments.id = degrees.department_id ORDER BY students.surname, students.name
-5.
-6. SELECT * FROM departments JOIN teachers ON departments.id = teachers.departments_id WHERE departments.name = 'Dipartimento di Matematica'
-7.
+5. SELECT degrees.*, courses.*, teachers.* FROM degrees JOIN courses ON degrees.id = courses.degree_id JOIN course_teacher ON courses.id = course_teacher.course_id JOIN teachers ON teachers.id = course_teacher.teacher_id;
+6. SELECT DISTINCT teachers.id, teachers.name, teachers.surname FROM departments JOIN degrees ON departments.id = degrees.department_id JOIN courses ON degrees.id = courses.degree_id JOIN course_teacher ON courses.id = course_teacher.course_id JOIN teachers ON course_teacher.teacher_id = teachers.id WHERE departments.name LIKE 'Dipartimento di Matematica' ORDER BY teachers.surname, teachers.name;
+7. SELECT students.id, students.name, students.surname, courses.id, courses.name, COUNT(courses.id) FROM students JOIN exam_student ON students.id = exam_student.student_id JOIN exams ON exam_student.exam_id = exams.id JOIN courses ON exams.course_id = courses.id GROUP BY students.id, courses.id;
